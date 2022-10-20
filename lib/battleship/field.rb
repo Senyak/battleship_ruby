@@ -8,6 +8,11 @@ class Field
     @field = Matrix::zero(10)
     @availableships = [4,3,2,1]
   end
+
+  def field_getter
+    @field
+  end
+
   def to_int(str)
     case str
     when 'A' then return 1
@@ -48,6 +53,6 @@ class Field
     if length>4 || @availableships[length]=0
       throw InvalidShip
     end
-    //TODO доделать добавление кораблей
+    #TODO доделать добавление кораблей
   end
 end

@@ -1,4 +1,6 @@
 require "battleship/version"
+require "battleship/ship"
+require "battleship/field"
 
 module Battleship
   class Error < StandardError; end
