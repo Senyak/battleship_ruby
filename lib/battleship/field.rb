@@ -50,7 +50,7 @@ class Field
     length = 0
     length = (m['x1'].to_i - m['x2'].to_i ).abs+1 if m['y1']==m['y2']
     length = (to_int(m['y1']) - to_int( m['y2']) ).abs+1 if m['x1']==m['x2']
-    if length>4 || @availableships[length]=0
+    if length>4 || @availableships[length]==0
       throw InvalidShip
     end
     #TODO доделать добавление кораблей
