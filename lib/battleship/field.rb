@@ -42,9 +42,10 @@ class Field
       end
     end
   end
+
   def add_ship (pos)
     m = pos.match( /(?<y1>[A-J])(?<x1>\d+):(?<y2>[A-J])(?<x2>\d+)/ )
-    if !(m['y1']==m['y2'] or m['x1']==m['x2'])
+    if m['y1']!=m['y2'] or m['x1']!=m['x2']
       throw InvalidShip
     end
     length = 0
@@ -53,6 +54,9 @@ class Field
     if length>4 || @availableships[length]=0
       throw InvalidShip
     end
+
+
+
     #TODO доделать добавление кораблей
   end
 end
