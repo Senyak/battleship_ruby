@@ -1,5 +1,5 @@
 
-class InvalidLocShip < RuntimeError; end
+class InvalidLocShip < StandardError; end
 
 class Ship
   def initialize(l,y1, y2, x1, x2, f)
@@ -7,8 +7,11 @@ class Ship
     @real_time_length = l
     @space_ship = [ x1, y1, x2, y2]
     @u_field = f
-
+    begin
     new_state_of_field
+    rescue InvalidLocShip => el
+      puts el.message
+    end
   end
 
   def origin_length_getter
@@ -20,7 +23,7 @@ class Ship
     #adding ship on field
     for i in @space_ship[0]..@space_ship[2]
       for j in @space_ship[1]..@space_ship[3]
-        throw InvalidLocShip if @u_field.field_getter[i,j] == 2 or @u_field.field_getter[i,j] == 1
+        raise InvalidLocShip.new "Oh no, it looks like the ship won't fit in here\n\n" if @u_field.field_getter[i,j] == 2 or @u_field.field_getter[i,j] == 1
 
         @u_field.field_setter(i,j,2)
       end

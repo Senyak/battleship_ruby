@@ -22,7 +22,11 @@ def start
   while user_field.available_ships_quantity > 0
     user_field.available_ships_getter
     p "Enter your ship, where range in format 'A2:A4' (for single-deck range A1:A1):"
-    user_field.add_ship( gets.chomp)
+    begin
+      user_field.add_ship( gets.chomp)
+    rescue InvalidShip => e
+      puts e.message
+    end
     user_field.show_field
   end
 
@@ -41,5 +45,3 @@ def start
     # TODO computer's turn
   end
 end
-
-

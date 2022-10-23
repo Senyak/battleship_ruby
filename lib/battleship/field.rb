@@ -1,6 +1,6 @@
 require "matrix"
 
-class InvalidShip < RuntimeError; end
+class InvalidShip < StandardError; end
 class Field
   def initialize
     @field = Matrix::zero(10)
@@ -65,13 +65,13 @@ class Field
     m = pos.upcase.match( /(?<y1>[A-J])(?<x1>\d+):(?<y2>[A-J])(?<x2>\d+)/ )
 
     if !(m['y1'] == m['y2'] or m['x1'] == m['x2'])
-      throw InvalidShip
+      raise InvalidShip.new "Oh no, there seems to be something wrong with your ship\n\n"
     end
     length = 0
     length = (m['x1'].to_i - m['x2'].to_i ).abs+1 if m['y1']==m['y2']
     length = (to_int(m['y1']) - to_int( m['y2']) ).abs+1 if m['x1']==m['x2']
     if length>4 || @available_ships[length-1]==0
-      throw InvalidShip
+      raise InvalidShip.new "Oh no, there seems to be something wrong with your ship\n\n"
     end
 
     y1 = to_int(m['y1'])-1
@@ -81,6 +81,10 @@ class Field
 
     x1, x2 = x2, x1 if x1> x2
     y1, y2 = y2, y1 if y1> y2
+
+    if x1<0 or y1<0 or x2>9 or y2>9
+      raise InvalidShip.new "Oh no, there seems to be something wrong with your ship\n\n"
+    end
 
     s = Ship.new(length, y1, y2, x1, x2, self)
 
