@@ -64,7 +64,7 @@ class Field
   def add_ship (pos)
     m = pos.upcase.match( /(?<y1>[A-J])(?<x1>\d+):(?<y2>[A-J])(?<x2>\d+)/ )
 
-    if !(m['y1'] == m['y2'] or m['x1'] == m['x2'])
+    if m.nil? or !(m['y1'] == m['y2'] or m['x1'] == m['x2']) 
       raise InvalidShip.new "Oh no, there seems to be something wrong with your ship\n\n"
     end
     length = 0
