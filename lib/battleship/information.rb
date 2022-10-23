@@ -33,4 +33,9 @@ module Inf
     puts "  untouched place - '_'"
     puts "At the end of the game, the program will tell you who won"
   end
+
+  def who_first?
+    # true - user, false - computer
+    [true, false].sample
+  end
 end

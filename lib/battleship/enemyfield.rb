@@ -94,8 +94,12 @@ class Enemy_Field
        [2,0,0,0,0,0,0,0,0,0],
        [2,0,0,0,0,0,2,2,2,2],],
     ]
-    @field = @fields[rand(9)]
+    @field = @fields.sample
     @field = @field.transpose if rand(10) % 2 == 0
+  end
+
+  def field_getter
+    @field
   end
   #def attack(x,y)
 
