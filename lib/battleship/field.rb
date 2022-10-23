@@ -1,7 +1,6 @@
 require "matrix"
 
 class InvalidShip < RuntimeError; end
-
 class Field
   def initialize
     @field = Matrix::zero(10)
@@ -65,8 +64,6 @@ class Field
   def add_ship (pos)
     m = pos.upcase.match( /(?<y1>[A-J])(?<x1>\d+):(?<y2>[A-J])(?<x2>\d+)/ )
 
-    #TODO  improve parsing  (Invalid throw on d7:d9)
-
     if !(m['y1'] == m['y2'] or m['x1'] == m['x2'])
       throw InvalidShip
     end
@@ -77,7 +74,15 @@ class Field
       throw InvalidShip
     end
 
-    s = Ship.new(length, to_int(m['y1'])-1, to_int(m['y2'])-1, m['x1'].to_i-1, m['x2'].to_i-1, self)
+    y1 = to_int(m['y1'])-1
+    y2 = to_int(m['y2'])-1
+    x2 = m['x2'].to_i-1
+    x1 = m['x1'].to_i-1
+
+    x1, x2 = x2, x1 if x1> x2
+    y1, y2 = y2, y1 if y1> y2
+
+    s = Ship.new(length, y1, y2, x1, x2, self)
 
     #updating available ships
     changing_available_ships(s.origin_length_getter)
