@@ -1,16 +1,31 @@
 require "matrix"
 
-
 class InvalidShip < RuntimeError; end
 
 class Field
   def initialize
     @field = Matrix::zero(10)
-    @availableships = [4,3,2,1]
+    @available_ships = [4, 3, 2, 1]
   end
 
   def field_getter
     @field
+  end
+
+  def field_setter(x,y,v)
+    @field[x,y] = v
+  end
+
+  def available_ships_quantity
+    @available_ships.sum
+  end
+
+  def available_ships_getter
+    puts "Available ships:"
+    puts "  #{@available_ships[0]} single-deck"
+    puts "  #{@available_ships[1]} double-deck"
+    puts "  #{@available_ships[2]} three-deck"
+    puts "  #{@available_ships[3]} four-deck"
   end
 
   def to_int(str)
@@ -43,20 +58,29 @@ class Field
     end
   end
 
+  def changing_available_ships(l)
+    @available_ships[l-1] = @available_ships[l-1] - 1
+  end
+
   def add_ship (pos)
-    m = pos.match( /(?<y1>[A-J])(?<x1>\d+):(?<y2>[A-J])(?<x2>\d+)/ )
-    if m['y1']!=m['y2'] or m['x1']!=m['x2']
+    m = pos.upcase.match( /(?<y1>[A-J])(?<x1>\d+):(?<y2>[A-J])(?<x2>\d+)/ )
+
+    #TODO  improve parsing  (Invalid throw on d7:d9)
+
+    if !(m['y1'] == m['y2'] or m['x1'] == m['x2'])
       throw InvalidShip
     end
     length = 0
     length = (m['x1'].to_i - m['x2'].to_i ).abs+1 if m['y1']==m['y2']
     length = (to_int(m['y1']) - to_int( m['y2']) ).abs+1 if m['x1']==m['x2']
-    if length>4 || @availableships[length]==0
+    if length>4 || @available_ships[length]==0
       throw InvalidShip
     end
 
+    s = Ship.new(length, to_int(m['y1'])-1, to_int(m['y2'])-1, m['x1'].to_i-1, m['x2'].to_i-1, self)
 
+    #updating available ships
+    changing_available_ships(s.origin_length_getter)
 
-    #TODO доделать добавление кораблей
   end
 end
