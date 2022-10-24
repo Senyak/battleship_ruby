@@ -1,11 +1,50 @@
-require "test_helper"
+require_relative "test_helper"
+require "matrix"
+#require_relative '../lib/battleship/field'
+require 'test/unit'
 
 class BattleshipTest < Minitest::Test
   def test_that_it_has_a_version_number
     refute_nil ::Battleship::VERSION
   end
 
-  def test_it_does_something_useful
-    assert false
+  def test_add_right_ship_case
+    f = Field.new
+    m = Matrix[[1,1,0,0,0,0,0,0,0,0],
+       [2,1,0,0,0,0,0,0,0,0],
+       [2,1,0,0,0,0,0,0,0,0],
+       [2,1,0,0,0,0,0,0,0,0],
+       [1,1,0,0,0,0,0,0,0,0],
+       [0,0,0,0,0,0,0,0,0,0],
+       [0,0,0,0,0,0,0,0,0,0],
+       [0,0,0,0,0,0,0,0,0,0],
+       [0,0,0,0,0,0,0,0,0,0],
+       [0,0,0,0,0,0,0,0,0,0]]
+       f.add_ship('a2:a4')
+    assert_equal(m, f.field_getter)
+  end
+
+  def test_invalid_ship
+    f = Field.new
+    f.add_ship('a1:a4')
+    assert_raises(InvalidShip) do
+     f.add_ship('a2:a6')
+    end
+
+    assert_raises(InvalidShip) do
+     f.add_ship('a2:b3')
+    end
+
+    assert_raises(InvalidShip) do
+     f.add_ship('a2')
+    end
+
+    assert_raises(InvalidShip) do
+     f.add_ship('c1:c4')
+    end
+
+    assert_raises(InvalidShip) do
+     f.add_ship('c0:c1')
+    end
   end
 end
