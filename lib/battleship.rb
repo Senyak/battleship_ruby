@@ -2,7 +2,8 @@ require "battleship/version"
 require "battleship/ship"
 require "battleship/field"
 require "battleship/enemyfield"
-
+require "battleship/board"
+require "battleship/users_turn"
 require_relative "./battleship/information"
 class Error < StandardError; end
 
@@ -37,14 +38,23 @@ def start
 
   computer_field = Enemy_Field.new
 
+  board = Board.new(user_field, computer_field)
+
 
   if !who_first?
+    puts "Now it's computer turn"
+    puts " "
     # TODO computer's turn
   end
 
   game_over = false
   while !game_over
-    # TODO user's turn
+    puts "Now it's your turn"
+    puts " "
+    game_over = user_turn(board)
+
+    puts "Now it's computer turn"
+    puts " "
     # TODO computer's turn
   end
 end

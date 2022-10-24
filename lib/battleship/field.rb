@@ -106,4 +106,6 @@ class Field
     changing_available_ships(s.origin_length_getter)
 
   end
+
+  #TODO delete_ship(pos)
 end
