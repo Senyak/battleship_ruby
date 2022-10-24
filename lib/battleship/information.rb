@@ -28,9 +28,9 @@ module Inf
     puts "After you have placed all the boats, it will be randomly determined who will start the game"
     puts "When it's your turn, you will enter the place you want to check (for example 'C3')"
     puts "The program will tell you if you hit one of the computer's ships or missed:"
-    puts "  a miss - '.'"
-    puts "  hit - 'x'"
-    puts "  untouched place - '_'"
+    puts "  a miss - '◯'"
+    puts "  hit - '☒'"
+    puts "  untouched place - '—'"
     puts "At the end of the game, the program will tell you who won"
   end
 
