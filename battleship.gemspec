@@ -9,8 +9,10 @@ Gem::Specification.new do |spec|
   spec.authors       = ["Senyak"]
   spec.email         = ["mselina@sfedu.ru"]
 
-  spec.summary       = %q{This is gem for battleship}
-  spec.description   = %q{This is gem for battleship}
+  spec.summary       = %q{This gem implements the battleship gameplay by entering commands through the console}
+  spec.description   = %q{The gem was created as a task in the discipline "Programming paradigms and technologies" in order to get acquainted with the development of gems.
+By itself, the gem represents the gameplay of a sea battle (according to Russian rules), where you play with a computer.
+Commands are entered through the console, everything else depends on your luck. (... there are possibly bug... in the sense feature)}
   spec.homepage      = "https://github.com/Senyak/battleship_ruby.git"
   spec.license       = "MIT"
 

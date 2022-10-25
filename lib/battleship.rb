@@ -10,16 +10,22 @@ class Error < StandardError; end
 extend Inf
 
 puts "Welcome to the Battleship! (Russian version)"
+sleep(1)
 puts "For read rules use 'rules'"
 puts "For read some information about game process use 'help'"
 puts "For starting game use 'start'"
-
 
 def start
   input = ''
   user_field = Field.new
   puts "First, place your ships on the field, follow the rules"
   puts "  "
+  puts "Would you like to place the ships on your own or rely on random generation?"
+  puts "  M[by my own]/R[random]  "
+  puts "     "
+  sleep(1)
+
+  #TODO random generation
 
   while user_field.available_ships_quantity > 0
     user_field.available_ships_getter
@@ -31,30 +37,86 @@ def start
     rescue InvalidShip => e
       puts e.message
     end
-    user_field.show_field_a
+    user_field.show_field
+    sleep(0.5)
   end
   exit if input == 'over'
-  puts "Finally you placed your ships!"
 
   computer_field = Enemy_Field.new
 
+
+  puts "Finally you placed your ships!"
+
   board = Board.new(user_field, computer_field)
 
+  puts "Now it will be decided who will go first."
+  sleep(1)
 
-  if !who_first?
+  wh = who_first?
+  if wh
+    puts "Computer will go first"
+  else
+    puts "You will go first"
+  end
+
+  sleep(1)
+
+
+  if wh
     puts "Now it's computer turn"
     puts " "
     # TODO computer's turn
   end
 
-  game_over = false
-  while !game_over
+  game_over = true
+  who_win = true
+
+  while game_over
     puts "Now it's your turn"
     puts " "
-    game_over = user_turn(board)
+    user_turn(board)
+    if b.av_getter_c == 0
+      game_over = false
+      who_win = true
+      break
+    end
+
+    sleep(1)
 
     puts "Now it's computer turn"
     puts " "
     # TODO computer's turn
+    if b.av_getter_u == 0
+      game_over = false
+      who_win = false
+      break
+    end
+
+    sleep(1)
+  end
+
+  if who_win
+    puts "Congratulations! You have won!"
+  else
+    puts "This time the machine was smarter... Better luck next time"
+  end
+
+  again
+end
+
+def again
+  puts "    "
+  puts "Do you want to play again?"
+  sleep(1)
+  answ = ''
+  until answ.downcase == 'yes' or answ.downcase == 'y' or answ.downcase == 'no' or answ.downcase == 'n'
+    puts "  Y[yes]/N[no]"
+    answ = gets.chomp
+    if answ.downcase == 'yes' or answ.downcase == 'y'
+      puts "Okey, let's start again!"
+      start
+    elsif answ.downcase == 'no' or answ.downcase == 'n'
+      puts "Thank you for your time! Favorable wind to you!"
+    end
   end
 end
