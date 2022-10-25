@@ -41,31 +41,20 @@ class Field
     else return 10
     end
   end
-  def show_field_a
-    for i in 0..10 do
-      for j in 0..10 do
-        print " — " if @field[i,j] == 0
-        print " ☓ " if @field[i,j] == 1
-        print " ☐ " if @field[i,j] == 2
-      end
-      puts " "
-    end
-  end
 
   def show_field
-    for i in 0..10 do
-      for j in 0..10 do
-        print " — " if @field[i,j] == 0 or @field[i,j] == 1
-        print " ☐ " if @field[i,j] == 2
-        print " ◯ " if @field[i,j] == -1
-        print " ☒ " if @field[i,j] == -2
+    for i in 0..9 do
+      for j in 0..9 do
+        print " — ".unicode_normalize if @field[i,j] == 0
+        print " ☓ ".unicode_normalize if @field[i,j] == 1
+        print " ☐ ".unicode_normalize if @field[i,j] == 2
       end
       puts " "
     end
   end
   def clean_field
-    for i in 0..10 do
-      for j in 0..10 do
+    for i in 0..9 do
+      for j in 0..9 do
         @field[i,j] = 0
       end
     end
