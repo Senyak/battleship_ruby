@@ -118,3 +118,31 @@ class Enemy_Field
   #end
 
 end
+class Enemy
+  def initialize (f)
+    @field = Enemy_Field.new
+    @user_field = f
+    @ships_count = 20
+  end
+  def amount_ships
+    @ships_count
+  end
+  def attack
+    x=-1
+    y=-1
+    while true
+      x = rand(10)
+      y= rand(10)
+      if  @user_field.field_getter[x,y]>=0
+        break
+      end
+    end
+    if @user_field.field_getter[x,y]==2
+      @user_field.field_setter(x,y, -2)
+      @ships_count-=1
+      puts 'attack was successful'
+    else
+      @user_field.field_setter(x,y, -1)
+    end
+  end
+end
