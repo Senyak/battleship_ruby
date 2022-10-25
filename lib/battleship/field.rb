@@ -101,10 +101,10 @@ class Field
     end
 
     s = Ship.new(length, y1, y2, x1, x2, self)
-
+    if s.goodship?
     #updating available ships
-    changing_available_ships(s.origin_length_getter)
-
+      changing_available_ships(s.origin_length_getter)
+    end
   end
 
   #TODO delete_ship(pos)

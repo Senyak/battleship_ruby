@@ -7,13 +7,17 @@ class Ship
     @real_time_length = l
     @space_ship = [ x1, y1, x2, y2]
     @u_field = f
+    @flag = true
     begin
     new_state_of_field
     rescue InvalidLocShip => el
+      @flag = false
       puts el.message
     end
   end
-
+  def goodship?
+    @flag
+  end
   def origin_length_getter
     @origin_length
   end
