@@ -4,11 +4,9 @@ class InvalidShoot < StandardError; end
 def user_turn(b)
   hit = true
 
-  while !hit
+  while hit
 
-    if b.av_getter_c == 0
-      return true
-    end
+    break if b.av_getter_c == 0
 
     puts "Enter coordinates of new shot in format 'A1':"
     shoot = gets.chomp
@@ -30,6 +28,7 @@ def user_turn(b)
       b.board_getter_c.field_setter(x,y,-2)
 
       if ship_length(b.board_getter_c.field_getter,x,y) == 0
+        puts "Congratulations, the enemy ship has been destroyed!"
         b.dec_av_c
       end
 
@@ -77,5 +76,4 @@ def ship_length(f,i,j)
       y -= 1
     end
   end
-  l += 1
 end
