@@ -108,6 +108,17 @@ class Enemy_Field
     @field[x,y] = v
   end
 
+  def show_field
+    for i in 0..9 do
+      for j in 0..9 do
+        print " — ".unicode_normalize if @field[i,j] == 0
+        print " ☓ ".unicode_normalize if @field[i,j] == 1
+        print " ☐ ".unicode_normalize if @field[i,j] == 2
+      end
+      puts " "
+    end
+  end
+
   #def attack(x,y)
 
   #  if @field[x,y]==2
