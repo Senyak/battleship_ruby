@@ -69,8 +69,6 @@ class Board
           print " ◯ ".unicode_normalize
         elsif @c_field[i,j] == -2
            print " ☒ ".unicode_normalize
-        elsif @c_field[i,j] == 2
-          print " ☐ ".unicode_normalize
         else
            print " — ".unicode_normalize
         end

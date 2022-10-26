@@ -131,6 +131,7 @@ def start
 
   while game_over
     while true
+      sleep(1)
       puts "Now it's your turn"
       puts " "
       begin
@@ -158,9 +159,9 @@ def start
       break
     end
 
-    sleep(1)
   end
 
+  sleep(1)
   if who_win
     puts "Congratulations! You have won!"
   else

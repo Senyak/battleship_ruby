@@ -13,7 +13,7 @@ def user_turn(b)
     puts "Enter coordinates of new shot in format 'A1':"
     shoot = gets.chomp
     exit if shoot == 'over'
-    m = shoot.upcase.match( /(?<y>[A-J])(?<x>\d+)/ )
+    m = shoot.strip.upcase.match( /^(?<y>[A-J])(?<x>\d+)$/ )
     if m.nil?
       raise InvalidShot.new "Oh no I'm afraid you can't shoot here\n\n"
     end

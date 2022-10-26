@@ -146,27 +146,49 @@ class Enemy
   end
 
   def attack
+
+    again = true
+
     if @last_hit != [-1,-1]
       flag = [1, -1, -1]
 
       while flag[0] == 1
         flag = shot_near(@user_field, @last_hit[0], @last_hit[1])
 
-        if flag[0] == 0
-          puts 'You are lucky... Сomputer missed'
+        if ship_length(@user_field, @last_hit[0],@last_hit[1]) == 0
+          sleep(1)
+          puts 'Unfortunately computer destroyed your ship'
+          @last_hit = [-1,-1]
+          @b.dec_av_u
+          @b.update_board(@user_field)
+          @b.show_board
+          puts '  '
           break
         end
 
-        x = flag[1]
-        y = flag[2]
-        @last_hit = [x,y]
+        if flag[0] == 0
+          sleep(1)
+          puts 'You are lucky... Сomputer missed'
+          again = false
+          @b.update_board(@user_field)
+          @b.show_board
+          puts '  '
+          break
+        end
+
         @b.update_board(@user_field)
+        sleep(1)
         puts 'Computer got into your ship'
         @b.show_board
         puts '  '
+
+
       end
 
-    else
+    end
+
+
+      while again
 
       x=-1
       y=-1
@@ -184,20 +206,24 @@ class Enemy
           @user_field[x,y] = -2
           @ships_count-=1
 
+          sleep(1)
           puts 'Attack was successful'
           @b.update_board(@user_field)
 
           if ship_length(@user_field,x,y) == 0
+            sleep(1)
             puts 'Unfortunately computer destroyed your ship'
             @last_hit = [-1,-1]
             @b.dec_av_u
             @b.show_board
             puts '  '
+            sleep(1)
             puts "Oh, no, here computer goes again"
-            attack
+
 
           else
             @last_hit = [x,y]
+            sleep(1)
             puts 'Computer got into your ship'
             @b.show_board
             puts '  '
@@ -205,74 +231,109 @@ class Enemy
             flag = [1, -1, -1]
 
             while flag[0] == 1
+              sleep(1)
               puts "Oh, no, here computer goes again"
               flag = shot_near(@user_field, @last_hit[0], @last_hit[1])
 
-              if flag[0] == 0
-                puts 'You are lucky... Сomputer missed'
+              if ship_length(@user_field,x,y) == 0
+                sleep(1)
+                puts 'Unfortunately computer destroyed your ship'
+                @last_hit = [-1,-1]
+                @b.dec_av_u
                 break
               end
 
-              x = flag[1]
-              y = flag[2]
-              @last_hit = [x,y]
+              if flag[0] == 0
+                sleep(1)
+                puts 'You are lucky... Сomputer missed'
+                p @last_hit
+                again = false
+                break
+              end
+
               @b.update_board(@user_field)
+              sleep(1)
               puts 'Computer got into your ship'
               @b.show_board
               puts '  '
             end
 
+            @b.update_board(@user_field)
+            @b.show_board
+            puts '  '
+
           end
 
         else
+          sleep(1)
           puts 'You are lucky... Сomputer missed'
           puts ' '
           @user_field[x,y] = -1
           @b.update_board(@user_field)
           @b.show_board
           puts '  '
+          again = false
         end
+      end
 
       @b.update_board(@user_field)
-    end
+
   end
 
   def shot_near(f,x,y)
       y1 = y
-      x1 = x-1
+      x1 = x
 
-      while f[x1,y] == -2
-        x1 = x1-1
-        if x1 < 0 or f[x1,y] == -1
+      while f[x1,y] == -2 or f[x1,y] == -1
+        if f[x1,y] == -1
+          x1 = x
+          break
+        end
+        x1 -= 1
+        if x1 < 0
           x1 = x
           break
         end
       end
 
       if x1 == x
-        while f[x1+1,y] == -2
-          x1 = x1+1
-          if x1 > 9 or f[x1,y] == -1
+        while f[x1,y] == -2 or f[x1,y] == -1
+          if f[x1,y] == -1
             x1 = x
+            break
+          end
+          x1 += 1
+          if x1 > 9
+            x1 = x
+            break
           end
         end
       end
 
       if x1 == x
         y1 = y-1
-        while f[x,y1] == -2
+        while f[x,y1] == -2 or f[x,y1] == -1
+          if f[x,y1] == -1
+            y1 = y
+            break
+          end
           y1 -= 1
-          if y1 < 0 or f[x,y1] == -1
+          if y1 < 0
             y1 = y
             break
           end
         end
 
         if y1 == y
-          while f[x,y1+1] == -2
-            y1 += 1
-            if y1 > 9 or f[x,y1] == -1
+          while f[x,y1] == -2 or f[x,y1] == -1
+            if f[x,y1] == -1
               y1 = y
+              break
+            end
+            y1 += 1
+            if y1 >9
+              y1 = y
+              break
             end
           end
         end
@@ -282,11 +343,11 @@ class Enemy
       if f[x1,y1] == 2
         f[x1,y1] = -2
         @ships_count-=1
-        [1,x1-1,y1]
+        [1,x1,y1]
       else
         f[x1,y1] = -1
         @last_hit = [x,y]
-        [0,x1-1,y1]
+        [0,x1,y1]
       end
   end
 

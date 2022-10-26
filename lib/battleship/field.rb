@@ -65,7 +65,7 @@ class Field
   end
 
   def add_ship (pos)
-    m = pos.upcase.match( /(?<y1>[A-J])(?<x1>\d+):(?<y2>[A-J])(?<x2>\d+)/ )
+    m = pos.strip.upcase.match( /^(?<y1>[A-J])(?<x1>\d+):(?<y2>[A-J])(?<x2>\d+)$/ )
 
     if m.nil? or !(m['y1'] == m['y2'] or m['x1'] == m['x2']) 
       raise InvalidShip.new "Oh no, there seems to be something wrong with your ship\n\n"
@@ -95,6 +95,5 @@ class Field
       changing_available_ships(s.origin_length_getter)
     end
   end
-
-  #TODO delete_ship(pos)
+  
 end
