@@ -1,5 +1,5 @@
 
-class InvalidShoot < StandardError; end
+class InvalidShot < StandardError; end
 
 def user_turn(b)
   hit = true
@@ -15,14 +15,14 @@ def user_turn(b)
     exit if shoot == 'over'
     m = shoot.upcase.match( /(?<y>[A-J])(?<x>\d+)/ )
     if m.nil?
-      throw InvalidShoot
+      raise InvalidShot.new "Oh no I'm afraid you can't shoot here\n\n"
     end
 
     x = m['x'].to_i-1
     y = to_int(m['y'])-1
 
-    if x<0 or x>9
-      throw InvalidShoot
+    if x<0 or x>9 or y<0 or y>9
+      raise InvalidShot.new "Oh no, I'm afraid you won't find enemy ships outside the field\n\n"
     end
 
     if b.board_getter_c[x,y] == 2
@@ -35,7 +35,7 @@ def user_turn(b)
       end
 
     elsif b.board_getter_c[x,y] == -2 or b.board_getter_c[x,y] == -1
-      throw InvalidShoot
+      raise InvalidShot.new "Oh no, you've already shot here, find another place\n\n"
     else
       puts "There is no ship here - miss"
       b.board_setter_c(x,y,-1)

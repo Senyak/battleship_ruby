@@ -130,9 +130,16 @@ def start
   who_win = true
 
   while game_over
-    puts "Now it's your turn"
-    puts " "
-    user_turn(board)
+    while true
+      puts "Now it's your turn"
+      puts " "
+      begin
+        user_turn(board)
+        break
+      rescue InvalidShot=>ex
+        puts ex.message
+      end
+    end
     if board.av_getter_c == 0
       game_over = false
       who_win = true
