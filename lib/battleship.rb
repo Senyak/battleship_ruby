@@ -116,11 +116,14 @@ def start
 
   sleep(1)
 
+  e = Enemy.new(board.board_getter_u, board.board_getter_c, board)
+
 
   if wh
     puts "Now it's computer turn"
     puts " "
-    # TODO computer's turn
+    e.attack
+    sleep(1)
   end
 
   game_over = true
@@ -130,7 +133,7 @@ def start
     puts "Now it's your turn"
     puts " "
     user_turn(board)
-    if b.av_getter_c == 0
+    if board.av_getter_c == 0
       game_over = false
       who_win = true
       break
@@ -140,8 +143,9 @@ def start
 
     puts "Now it's computer turn"
     puts " "
-    # TODO computer's turn
-    if b.av_getter_u == 0
+    e.attack
+
+    if board.av_getter_u == 0
       game_over = false
       who_win = false
       break

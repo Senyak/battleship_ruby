@@ -37,11 +37,15 @@ class Board
   end
 
   def dec_av_u
-    @u_av_ships
+    @u_av_ships -= 1
   end
 
   def dec_av_c
-    @c_av_ships
+    @c_av_ships -= 1
+  end
+
+  def update_board(new_u_f)
+    @u_field = new_u_f
   end
 
   def show_board
@@ -65,6 +69,8 @@ class Board
           print " ◯ ".unicode_normalize
         elsif @c_field[i,j] == -2
            print " ☒ ".unicode_normalize
+        elsif @c_field[i,j] == 2
+          print " ☐ ".unicode_normalize
         else
            print " — ".unicode_normalize
         end

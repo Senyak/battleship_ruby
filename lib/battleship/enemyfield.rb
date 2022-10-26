@@ -130,30 +130,165 @@ class Enemy_Field
 
 end
 class Enemy
-  def initialize (f)
-    @field = Enemy_Field.new
-    @user_field = f
+  def initialize (u_f, c_f, board)
+    @field = c_f
+    @user_field = u_f
     @ships_count = 20
+    @last_hit = [-1,-1]
+    @b = board
   end
   def amount_ships
     @ships_count
   end
+
+  def u_field_getter
+    @user_field
+  end
+
   def attack
-    x=-1
-    y=-1
-    while true
-      x = rand(10)
-      y= rand(10)
-      if  @user_field.field_getter[x,y]>=0
-        break
+    if @last_hit != [-1,-1]
+      flag = [1, -1, -1]
+
+      while flag[0] == 1
+        flag = shot_near(@user_field, @last_hit[0], @last_hit[1])
+
+        if flag[0] == 0
+          puts 'You are lucky... Сomputer missed'
+          break
+        end
+
+        x = flag[1]
+        y = flag[2]
+        @last_hit = [x,y]
+        @b.update_board(@user_field)
+        puts 'Computer got into your ship'
+        @b.show_board
+        puts '  '
       end
-    end
-    if @user_field.field_getter[x,y]==2
-      @user_field.field_setter(x,y, -2)
-      @ships_count-=1
-      puts 'attack was successful'
+
     else
-      @user_field.field_setter(x,y, -1)
+
+      x=-1
+      y=-1
+      while true
+        x = rand(10)
+        y= rand(10)
+
+        if  @user_field[x,y]>=0
+          break
+        end
+
+      end
+
+        if @user_field[x,y] == 2
+          @user_field[x,y] = -2
+          @ships_count-=1
+
+          puts 'Attack was successful'
+          @b.update_board(@user_field)
+
+          if ship_length(@user_field,x,y) == 0
+            puts 'Unfortunately computer destroyed your ship'
+            @last_hit = [-1,-1]
+            @b.dec_av_u
+            @b.show_board
+            puts '  '
+            puts "Oh, no, here computer goes again"
+            attack
+
+          else
+            @last_hit = [x,y]
+            puts 'Computer got into your ship'
+            @b.show_board
+            puts '  '
+
+            flag = [1, -1, -1]
+
+            while flag[0] == 1
+              puts "Oh, no, here computer goes again"
+              flag = shot_near(@user_field, @last_hit[0], @last_hit[1])
+
+              if flag[0] == 0
+                puts 'You are lucky... Сomputer missed'
+                break
+              end
+
+              x = flag[1]
+              y = flag[2]
+              @last_hit = [x,y]
+              @b.update_board(@user_field)
+              puts 'Computer got into your ship'
+              @b.show_board
+              puts '  '
+            end
+
+          end
+
+        else
+          puts 'You are lucky... Сomputer missed'
+          puts ' '
+          @user_field[x,y] = -1
+          @b.update_board(@user_field)
+          @b.show_board
+          puts '  '
+        end
+
+      @b.update_board(@user_field)
     end
   end
+
+  def shot_near(f,x,y)
+      y1 = y
+      x1 = x-1
+
+      while f[x1,y] == -2
+        x1 = x1-1
+        if x1 < 0 or f[x1,y] == -1
+          x1 = x
+          break
+        end
+      end
+
+      if x1 == x
+        while f[x1+1,y] == -2
+          x1 = x1+1
+          if x1 > 9 or f[x1,y] == -1
+            x1 = x
+          end
+        end
+      end
+
+      if x1 == x
+        y1 = y-1
+        while f[x,y1] == -2
+          y1 -= 1
+          if y1 < 0 or f[x,y1] == -1
+            y1 = y
+            break
+          end
+        end
+
+        if y1 == y
+          while f[x,y1+1] == -2
+            y1 += 1
+            if y1 > 9 or f[x,y1] == -1
+              y1 = y
+            end
+          end
+        end
+
+      end
+
+      if f[x1,y1] == 2
+        f[x1,y1] = -2
+        @ships_count-=1
+        [1,x1-1,y1]
+      else
+        f[x1,y1] = -1
+        @last_hit = [x,y]
+        [0,x1-1,y1]
+      end
+  end
+
+
 end
