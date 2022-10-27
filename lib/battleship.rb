@@ -39,6 +39,7 @@ puts "For starting game use 'start'"
 
 def start
   input = ''
+  str_input= ''
   user_field = Field.new
   puts "First, place your ships on the field, follow the rules"
   puts "  "
@@ -135,12 +136,13 @@ def start
       puts "Now it's your turn"
       puts " "
       begin
-        user_turn(board)
+        str_input = user_turn(board)
         break
       rescue InvalidShot=>ex
         puts ex.message
       end
     end
+    break if str_input== 'over'
     if board.av_getter_c == 0
       game_over = false
       who_win = true
@@ -160,7 +162,7 @@ def start
     end
 
   end
-
+  exit if str_input== 'over'
   sleep(1)
   if who_win
     puts "Congratulations! You have won!"

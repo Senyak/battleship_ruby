@@ -130,7 +130,7 @@ class Enemy_Field
 
 end
 class Enemy
-  def initialize (u_f, c_f, board)
+  def initialize(u_f, c_f, board)
     @field = c_f
     @user_field = u_f
     @ships_count = 20

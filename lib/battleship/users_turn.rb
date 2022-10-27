@@ -12,14 +12,14 @@ def user_turn(b)
 
     puts "Enter coordinates of new shot in format 'A1':"
     shoot = gets.chomp
-    exit if shoot == 'over'
+    return 'over' if shoot == 'over'
     m = shoot.strip.upcase.match( /^(?<y>[A-J])(?<x>\d+)$/ )
     if m.nil?
       raise InvalidShot.new "Oh no I'm afraid you can't shoot here\n\n"
     end
 
     x = m['x'].to_i-1
-    y = to_int(m['y'])-1
+    y = to_integer(m['y'])-1
 
     if x<0 or x>9 or y<0 or y>9
       raise InvalidShot.new "Oh no, I'm afraid you won't find enemy ships outside the field\n\n"
@@ -48,7 +48,7 @@ def user_turn(b)
 
 end
 
-def to_int(str)
+def to_integer(str)
   case str
   when 'A' then return 1
   when 'B' then return 2
