@@ -1,8 +1,13 @@
 # Battleship
+Welcome to our new gem! If you want to improve our gem, in this directory, you'll find the files you need to be able to package up your Ruby library into a gem. Put your Ruby code in the file `lib/battleship`. To experiment with that code, run `bin/console` for an interactive prompt.
 
-Welcome to your new gem! In this directory, you'll find the files you need to be able to package up your Ruby library into a gem. Put your Ruby code in the file `lib/battleship`. To experiment with that code, run `bin/console` for an interactive prompt.
+This gem implements the battleship gameplay by entering commands through the console
 
-TODO: Delete this and the text above, and describe your gem
+The gem was created as a task in the discipline "Programming paradigms and technologies" in order to get acquainted with the development of gems.
+By itself, the gem represents the gameplay of a sea battle (according to Russian rules), where you play with a computer.
+Commands are entered through the console, everything else depends on your luck. 
+
+(... there are possibly bug... in the sense feature)
 
 ## Installation
 
@@ -22,7 +27,9 @@ Or install it yourself as:
 
 ## Usage
 
-TODO: Write usage instructions here
+In order to learn how to use this gem, we advise you to study the 'rules' and 'help' commands before entering 'start'.
+
+(⁠☞⁠^⁠o⁠^⁠)⁠ ⁠☞
 
 ## Development
 
