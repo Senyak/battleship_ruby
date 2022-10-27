@@ -47,4 +47,13 @@ class BattleshipTest < Minitest::Test
      f.add_ship('c0:c1')
     end
   end
+
+  def test_right_clean
+    f = Field.new
+    f.add_ship('a2:a4')
+    m = Matrix::zero(10)
+    f.clean_field
+    assert_equal(m, f.field_getter)
+    end
+
 end
