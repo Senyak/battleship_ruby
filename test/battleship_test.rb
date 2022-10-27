@@ -85,4 +85,14 @@ class BattleshipTest < Minitest::Test
            [0,1,0,-1,0,0,0]]
         assert_equal(0, ship_length(s, 2, 2))
     end
+
+    def test_good_ship
+      f = Field.new
+      f.add_ship('a2:a4')
+      s = Ship.new(1,1,1,1,1, f)
+      assert(!s.goodship?)
+      s = Ship.new(1,5,5,5,5, f)
+      assert(s.goodship?)
+    end
+
 end
