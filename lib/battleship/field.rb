@@ -41,20 +41,21 @@ class Field
     else return 10
     end
   end
-
   def show_field
-    for i in 0..9 do
-      for j in 0..9 do
-        print " — ".unicode_normalize if @field[i,j] == 0
-        print " ☓ ".unicode_normalize if @field[i,j] == 1
-        print " ☐ ".unicode_normalize if @field[i,j] == 2
+    print "  | A  B  C  D  E  F  G  H  I  J\n"
+
+    for i in 0..10 do
+      print "#{i+1} |" if i<9
+      print "#{i+1}|" if i==9
+      for j in 0..10 do
+        print " #{@field[i,j]} "
       end
       puts " "
     end
   end
   def clean_field
-    for i in 0..9 do
-      for j in 0..9 do
+    for i in 0..10 do
+      for j in 0..10 do
         @field[i,j] = 0
       end
     end
@@ -64,10 +65,10 @@ class Field
     @available_ships[l-1] = @available_ships[l-1] - 1
   end
 
-  def add_ship(pos)
-    m = pos.strip.upcase.match( /^(?<y1>[A-J])(?<x1>\d+):(?<y2>[A-J])(?<x2>\d+)$/ )
+  def add_ship (pos)
+    m = pos.upcase.match( /(?<y1>[A-J])(?<x1>\d+):(?<y2>[A-J])(?<x2>\d+)/ )
 
-    if m.nil? or !(m['y1'] == m['y2'] or m['x1'] == m['x2']) 
+    if m.nil? or !(m['y1'] == m['y2'] or m['x1'] == m['x2'])
       raise InvalidShip.new "Oh no, there seems to be something wrong with your ship\n\n"
     end
     length = 0
@@ -90,10 +91,9 @@ class Field
     end
 
     s = Ship.new(length, y1, y2, x1, x2, self)
-    if s.goodship?
+
     #updating available ships
-      changing_available_ships(s.origin_length_getter)
-    end
+    changing_available_ships(s.origin_length_getter)
+
   end
-  
 end

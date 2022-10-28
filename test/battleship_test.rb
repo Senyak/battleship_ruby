@@ -95,4 +95,5 @@ class BattleshipTest < Minitest::Test
       assert(s.goodship?)
     end
 
+    
 end

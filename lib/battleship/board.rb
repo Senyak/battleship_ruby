@@ -49,7 +49,10 @@ class Board
   end
 
   def show_board
+    print "  |  A  B  C  D  E  F  G  H  I     ||    | A  B  C  D  E  F  G  H  I  J\n"
     for i in 0..9 do
+      print "#{i+1} |" if i<9
+      print "#{i+1}|" if i==9
       for j in 0..9 do
         if @u_field[i,j] == 0 or @u_field[i,j] == 1
           print " — ".unicode_normalize
@@ -62,7 +65,10 @@ class Board
         end
       end
 
-      print "  ||  "
+      print '  ||  '
+
+      print "#{i+1} |" if i<9
+      print "#{i+1}|" if i==9
 
       for j in 0..9 do
         if @c_field[i,j] == -1

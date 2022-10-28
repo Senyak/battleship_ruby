@@ -109,7 +109,10 @@ class Enemy_Field
   end
 
   def show_field
+    print "  | A  B  C  D  E  F  G  H  I  J\n"
     for i in 0..9 do
+      print "#{i+1} |" if i<9
+      print "#{i+1}|" if i==9
       for j in 0..9 do
         print " — ".unicode_normalize if @field[i,j] == 0
         print " ☓ ".unicode_normalize if @field[i,j] == 1
