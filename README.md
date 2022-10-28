@@ -1,5 +1,5 @@
 # Battleship
-Welcome to our new gem! If you want to improve our gem, in this directory, you'll find the files you need to be able to package up your Ruby library into a gem. Put your Ruby code in the file `lib/battleship`. To experiment with that code, run `bin/console` for an interactive prompt.
+Welcome to our new gem!
 
 This gem implements the battleship gameplay by entering commands through the console
 
