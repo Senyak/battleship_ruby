@@ -27,6 +27,7 @@ Or install it yourself as:
 
 ## Usage
 Download the game, break into the ship battle, enter coordinates, arrange the ship yourself or use a random field. Show the machine that it can't compete with a human. Prove that you are the most worthy commander of the ship!
+
 In order to learn how to use this gem, we advise you to study the 'rules' and 'help' commands before entering 'start'.
 When entering coordinates, you can enter over to exit the game
 
